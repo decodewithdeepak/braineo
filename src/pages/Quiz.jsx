@@ -407,24 +407,9 @@ const Quiz = () => {
   const handleShowResults = async () => {
     setShowResults(true);
   
-    console.log("slectedt module",selectedModule)
-    // 🧠 Call only after quiz is finished and results are ready
-    try {
-      await saveQuizScore({
-        userID: user.$id,
-        pathID: selectedPathId,
-        moduleID: selectedModule, // ✅ keep it as index (string/number)
-        moduleName: modules[selectedModule]?.title || `Module ${parseInt(selectedModule) + 1} `,
-        score: totalScore,
-        feedback: `Accuracy: ${accuracyValue}%`,
-        timestamp: new Date().toISOString(),
-      });
-      
-      
-      console.log("✅ Quiz score saved!");
-    } catch (err) {
-      console.error("❌ Error saving quiz result:", err);
-    }
+    console.log("selected module", selectedModule);
+    // Don't try to save quiz score here - we're already doing it in the useEffect
+    // when showResults changes. This duplicate call is causing errors.
   };
 
   if (loading) {

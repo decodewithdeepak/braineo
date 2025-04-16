@@ -110,7 +110,6 @@ const Flashcards = () => {
     }
   };
 
-
   const fetchFlashcards = async () => {
     if (!topic.trim() || numCards < 1) {
       return alert("Please enter a valid topic and number of flashcards!");
@@ -125,10 +124,15 @@ const Flashcards = () => {
       const generatedCards = await generateFlashcards(topic, numCards);
       setCards(generatedCards);
 
-      if (user?.$id) {
-        await updateUserProgress(user.$id, {
-          topicName: topic,
-          flashcardCount: generatedCards.length, // Update with actual number of cards
+      if (user?.$id && selectedPathId) {
+        // Pass the actual selected path ID and the data
+        await updateUserProgress(user.$id, selectedPathId, {
+          flashcardCount: generatedCards.length // Update with actual number of cards
+        });
+      } else if (user?.$id) {
+        // If no path is selected, let the function handle it
+        await updateUserProgress(user.$id, null, {
+          flashcardCount: generatedCards.length
         });
       }
     } catch (err) {
@@ -411,7 +415,7 @@ const Flashcards = () => {
         {/* Add nudges section after the cards are displayed */}
         {cards.length > 0 && !loading && flashcardNudges.length > 0 && (
           <motion.div
-            className="w-full max-w-2xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="w-full max-w-5xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}

@@ -241,7 +241,7 @@ const LearningPath = () => {
       
       console.log("AI generated paths:", aiGeneratedPaths);
       
-      // Get current timestamp in ISO format for createdAt
+      // Current timestamp for createdAt and updatedAt fields
       const currentDate = new Date().toISOString();
       
       // Create the paths in the database

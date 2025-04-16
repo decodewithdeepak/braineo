@@ -111,12 +111,26 @@ const Dashboard = () => {
     }
   };
 
-
-
-
   const fetchUserProgress = async () => {
     try {
       const user = await account.get(); // Get logged-in user
+
+      // Fetch career paths to get flashcard count
+      const pathsResponse = await databases.listDocuments(
+        DATABASE_ID,
+        CAREER_COLLECTION_ID,
+        [Query.equal("userID", user.$id)]
+      );
+      
+      // Calculate total flashcards from all paths
+      let totalFlashcardsMastered = 0;
+      pathsResponse.documents.forEach(path => {
+        if (path.flashcardCount) {
+          totalFlashcardsMastered += parseInt(path.flashcardCount || 0);
+        }
+      });
+      
+      setFlashcardCount(totalFlashcardsMastered);
 
       // Fetch assessments for this user
       const assessmentsResponse = await databases.listDocuments(
@@ -125,18 +139,12 @@ const Dashboard = () => {
         [Query.equal("userID", user.$id)]
       );
 
-      // Calculate flashcard count from assessments
-      let totalFlashcardsMastered = 0;
       let quizScoresData = [];
       let totalQuizScore = 0;
       let totalQuizCount = 0;
 
       // Process assessments data
       assessmentsResponse.documents.forEach(assessment => {
-        if (assessment.flashcardsMastered) {
-          totalFlashcardsMastered += parseInt(assessment.flashcardsMastered);
-        }
-
         if (assessment.quizScore) {
           const score = parseInt(assessment.quizScore);
           const total = parseInt(assessment.quizTotal || 10);
@@ -148,7 +156,7 @@ const Dashboard = () => {
             score: score,
             total: total,
             accuracy: ((score / total) * 100).toFixed(1),
-            date: assessment.completedAt || new Date().toISOString(),
+            date: assessment.completedAt || assessment.timestamp || new Date().toISOString(),
           });
 
           totalQuizScore += score;
@@ -156,7 +164,6 @@ const Dashboard = () => {
         }
       });
 
-      setFlashcardCount(totalFlashcardsMastered);
       setQuizScores(quizScoresData);
 
       // Update user stats

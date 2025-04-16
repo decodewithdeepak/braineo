@@ -362,6 +362,9 @@ const ProfileForm = () => {
           moduleTitles = ['Fundamentals', 'Core Concepts', 'Advanced Topics', 'Practical Application'];
         }
         
+        // Get current timestamp in ISO format for createdAt and updatedAt
+        const currentDate = new Date().toISOString();
+        
         await databases.createDocument(
           DATABASE_ID,
           CAREER_PATHS_COLLECTION_ID,
@@ -372,10 +375,12 @@ const ProfileForm = () => {
             progress: 0,                                       
             careerName: path.pathName || "Learning Path",
             completedModules: JSON.stringify([]),
-            quizScores: JSON.stringify([]), // Add the required quizScores attribute             
+            quizScores: JSON.stringify([]),            
             recommendedSkills: JSON.stringify(formData.skills.slice(0, 5)), 
             aiNudges: JSON.stringify([]),                      
-            summaryGenerated: false                           
+            summaryGenerated: false,
+            createdAt: currentDate,
+            updatedAt: currentDate
           }
         );
       }

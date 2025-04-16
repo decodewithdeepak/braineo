@@ -87,6 +87,25 @@ export const deleteLearningPath = async (pathId) => {
 // Updated to store quiz results within the career path document
 export const updateUserProgress = async (userId, pathId, data) => {
   try {
+    // First check if pathId is an object or is missing
+    if (!pathId || typeof pathId === 'object') {
+      // Handle case where no pathId is provided - update or create a user stats document
+      const response = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_CAREER_PATHS_COLLECTION_ID,
+        [Query.equal("userID", userId)]
+      );
+      
+      // Use the first path if available, otherwise just track stats without updating a path
+      if (response.documents.length > 0) {
+        pathId = response.documents[0].$id;
+      } else {
+        // If no path exists, just log the activity without updating the database
+        console.log("No paths found for user, cannot update progress");
+        return null;
+      }
+    }
+    
     const doc = await databases.getDocument(
       import.meta.env.VITE_APPWRITE_DATABASE_ID,
       import.meta.env.VITE_CAREER_PATHS_COLLECTION_ID,
@@ -211,7 +230,6 @@ export const markModuleComplete = async (pathId, moduleIndex) => {
   }
 };
 
-
 export const saveQuizScore = async ({ userID, pathID, moduleID, moduleName, score, feedback, timestamp }) => {
   try {
     const res = await databases.createDocument(
@@ -223,13 +241,12 @@ export const saveQuizScore = async ({ userID, pathID, moduleID, moduleName, scor
         pathID,
         moduleID,
         moduleName, // ✅ added module title
-        score,
+        quizScore: score, // Keep this required field
+        quizTotal: 10 * (score / 10), // Adding the required quizTotal field based on score
         feedback,
         timestamp
+        // Removed "score" field which is not in the schema
       }
-
-      
-
     );
     console.log("✅ Score saved in assessments:", res);
     return res;
@@ -238,8 +255,6 @@ export const saveQuizScore = async ({ userID, pathID, moduleID, moduleName, scor
     throw err;
   }
 };
-
-
 
 export const getQuizScores = async ({
   userId = null,
