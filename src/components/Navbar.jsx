@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { databases } from "../config/database";
 import { useAuth } from "../context/AuthContext";
-import { RiFireFill, RiMagicLine } from "react-icons/ri"; // Changed from RiBrainLine to RiMagicLine
+import { RiFireFill, RiBrainLine } from "react-icons/ri";
 import { format, differenceInDays, parseISO } from "date-fns";
 import { Query } from "appwrite";
 
@@ -233,7 +233,7 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
               className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-tr from-purple-600 to-blue-400 rounded-lg 
                 flex items-center justify-center"
             >
-              <RiMagicLine className="text-white text-lg md:text-xl" />
+              <RiBrainLine className="text-white text-lg md:text-xl" />
             </motion.div>
             <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-700 
               to-blue-500 bg-clip-text text-transparent truncate">

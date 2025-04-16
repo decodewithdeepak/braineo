@@ -121,7 +121,7 @@ const Dashboard = () => {
         CAREER_COLLECTION_ID,
         [Query.equal("userID", user.$id)]
       );
-      
+
       // Calculate total flashcards from all paths
       let totalFlashcardsMastered = 0;
       pathsResponse.documents.forEach(path => {
@@ -129,7 +129,7 @@ const Dashboard = () => {
           totalFlashcardsMastered += parseInt(path.flashcardCount || 0);
         }
       });
-      
+
       setFlashcardCount(totalFlashcardsMastered);
 
       // Fetch assessments for this user
@@ -262,7 +262,7 @@ const Dashboard = () => {
     // Calculate total scores and total possible scores across all quizzes
     const totalScored = quizScores.reduce((sum, quiz) => sum + quiz.score, 0);
     const totalPossible = quizScores.reduce((sum, quiz) => sum + quiz.total, 0);
-    
+
     // Calculate percentage of total score
     return totalPossible > 0 ? ((totalScored / totalPossible) * 100).toFixed(1) : 0;
   };
@@ -376,16 +376,12 @@ const Dashboard = () => {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm">
-                <div className="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl flex items-center gap-2">
-                  <span className="text-xl">🔥</span> {currentStreak} day streak
+                <div className="px-4 py-2 bg-blue-200 text-blue-700 rounded-xl flex items-center gap-2">
+                  🔥 {currentStreak} day streak
                 </div>
-                {isLoading ? (
-                  <div className="px-4 py-2 bg-gray-100 rounded-xl w-24 h-9 animate-pulse"></div>
-                ) : (
-                  <div className="px-4 py-2 bg-indigo-100 text-indigo-600 rounded-xl">
-                    Total Quiz Score: {userStats.avgQuizScore}
-                  </div>
-                )}
+                <div className="px-4 py-2 bg-blue-200 text-blue-700 rounded-xl">
+                  ⭐ Total Quiz Score: {userStats.avgQuizScore}
+                </div>
               </div>
             </motion.div>
 

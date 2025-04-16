@@ -5,7 +5,7 @@ import {
   RiMailFill,
   RiBugFill,
   RiHeartFill,
-  RiMagicLine, // Changed from RiReactjsLine to RiMagicLine for consistency
+  RiBrainLine, // Changed from RiReactjsLine to RiBrainLine for consistency
   RiCodeSSlashFill,
   RiInstagramLine,
   RiLinkedinBoxFill,
@@ -41,7 +41,7 @@ const Footer = () => {
               animate={{ opacity: 1 }}
               className="flex items-center gap-2"
             >
-              <RiMagicLine className="text-3xl text-purple-600" /> {/* Changed icon and color to match Navbar */}
+              <RiBrainLine className="text-3xl text-purple-600" /> {/* Changed icon and color to match Navbar */}
               <div className="text-2xl font-bold bg-gradient-to-r from-purple-700 to-blue-500 bg-clip-text text-transparent">
                 NeoLearn
               </div>
