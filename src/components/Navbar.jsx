@@ -195,7 +195,7 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
         transition={{ type: "spring", stiffness: 100 }}
         className={`${
           isScrolled ? "bg-white/60" : "bg-transparent"
-        } backdrop-blur-md border-b border-purple-100/70 px-3 sm:px-4 md:px-8 py-3 md:py-4 
+        } backdrop-blur-md border-b border-purple-100/70 px-3 sm:px-4 md:px-8 py-3
           flex justify-between items-center fixed top-0 w-full z-[999] shadow-sm transition-colors duration-300`}
       >
         <div className="flex items-center gap-2 md:gap-4">
@@ -244,7 +244,7 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
             >
               <RiMagicLine className="text-white text-lg md:text-xl" />
             </motion.div>
-            <span className="text-lg md:text-xl font-serif font-bold bg-gradient-to-r from-purple-700 
+            <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-700 
               to-blue-500 bg-clip-text text-transparent truncate">
               NeoLearn
             </span>

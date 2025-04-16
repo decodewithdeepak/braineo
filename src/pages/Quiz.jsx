@@ -450,7 +450,7 @@ const Quiz = () => {
 
   if (!quizData) {
     return (
-      <div className="min-h-[calc(100vh-80px)] bg-gradient-to-b from-blue-50 via-white to-blue-50 p-4 sm:p-8 mt-8">
+      <div className="min-h-[calc(100vh-80px)] bg-gradient-to-b from-blue-50 via-white to-blue-50 p-4 sm:p-8 mt-4">
         <motion.div
           className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-4 sm:p-8"
           initial={{ opacity: 0, y: 20 }}
@@ -589,7 +589,7 @@ const Quiz = () => {
             showResults={false}
           />
 
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-between mt-4">
             <motion.button
               onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
               className={`flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center rounded-full ${currentIndex === 0
@@ -625,7 +625,7 @@ const Quiz = () => {
           </div>
 
           {currentIndex === quizData.questions.length - 1 && (
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-4">
               <motion.button
                 onClick={handleShowResults}
                 className="bg-gradient-to-r from-blue-400 to-blue-500 text-white text-lg sm:text-2xl px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg w-full sm:w-auto"

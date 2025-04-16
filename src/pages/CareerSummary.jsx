@@ -137,7 +137,7 @@ const CareerSummary = () => {
   }
 
   return (
-    <div className="md:p-6 min-h-screen bg-gradient-to-br from-sky-100 to-blue-100 space-y-10 mt-8">
+    <div className="md:p-6 min-h-screen bg-gradient-to-br from-sky-100 to-blue-100 space-y-10 mt-4">
       {careerSummaries.map((summary, index) => {
         const pieData = [
           { name: 'Completed', value: summary.data.completed },
@@ -170,7 +170,7 @@ const CareerSummary = () => {
               <p><span className="bold-text">Modules Completed:</span> {summary.data.completed}/{summary.data.total}</p>
               <p><span className="bold-text">Overall Progress:</span> {summary.data.progress}%</p>
               <hr className="my-3" />
-              <div className="flex flex-col items-center justify-center mt-6 mb-4">
+              <div className="flex flex-col items-center justify-center mt-4 mb-4">
                 <div style={{ width: '200px', height: '200px' }}>
                   <PieChart width={200} height={200}>
                     <Pie data={pieData} dataKey="value" cx="50%" cy="50%" outerRadius={60} label>

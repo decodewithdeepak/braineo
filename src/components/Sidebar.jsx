@@ -83,9 +83,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-[999] p-2 rounded-xl bg-white/80 backdrop-blur-sm border border-blue-100/30 shadow-lg md:hidden"
+        className="fixed top-3 left-3 z-[999] p-2 rounded-xl bg-white/80 backdrop-blur-sm border border-blue-100/30 shadow-lg md:hidden"
       >
-        {isOpen ? <RiCloseLine className="w-6 h-6" /> : <RiMenuLine className="w-6 h-6" />}
+        {isOpen ? <RiCloseLine className="w-5 h-5" /> : <RiMenuLine className="w-5 h-5" />}
       </motion.button>
 
       {/* Backdrop for mobile */}

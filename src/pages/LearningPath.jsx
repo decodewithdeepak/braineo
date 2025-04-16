@@ -387,7 +387,7 @@ const LearningPath = () => {
   }, [careerPaths, loading, error]);
 
   return (
-    <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 p-6 relative overflow-hidden mt-8">
+    <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 p-6 relative overflow-hidden mt-4">
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -669,7 +669,7 @@ const LearningPath = () => {
         {!loading && pathNudges.length > 0 && (
           <motion.div
             variants={item}
-            className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4"
           >
             {pathNudges.map((nudge, index) => (
               <NudgeCard
@@ -686,7 +686,7 @@ const LearningPath = () => {
 
       {/* Debug section in development mode */}
       {import.meta.env.DEV && careerPaths.length === 0 && !loading && (
-        <div className="mt-8 p-4 bg-gray-100 rounded-lg text-xs overflow-auto max-h-64">
+        <div className="mt-4 p-4 bg-gray-100 rounded-lg text-xs overflow-auto max-h-64">
           <h4 className="font-bold mb-2">Debug Info:</h4>
           <p>User ID: {userProfile?.userID || 'Not loaded'}</p>
           <p>Career Goal: {userProfile?.careerGoal || 'None'}</p>

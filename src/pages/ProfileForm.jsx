@@ -726,7 +726,7 @@ const ProfileForm = () => {
             
             {/* Brain Animation */}
             <motion.div
-              className="mt-8 text-4xl text-blue-600"
+              className="mt-4 text-4xl text-blue-600"
               animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.5, 1, 0.5],
@@ -741,7 +741,7 @@ const ProfileForm = () => {
             </motion.div>
 
             {/* Loading Message */}
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <motion.h3
                 className="text-lg font-semibold text-blue-800 mb-2"
                 animate={{ opacity: [0.5, 1, 0.5] }}
@@ -766,7 +766,7 @@ const ProfileForm = () => {
             </div>
 
             {/* Progress Dots */}
-            <div className="flex gap-2 mt-6">
+            <div className="flex gap-2 mt-4">
               {[0, 1, 2].map((i) => (
                 <motion.div
                   key={i}
@@ -920,7 +920,7 @@ const ProfileForm = () => {
                   {/* Career Assessment Quiz */}
                   <motion.div
                     variants={itemVariants}
-                    className="space-y-4 mt-6"
+                    className="space-y-4 mt-4"
                   >
                     <div className="flex items-center gap-2 text-blue-800 font-medium">
                       <RiQuestionLine className="text-xl text-blue-600" /> Career Interest Assessment
@@ -1151,7 +1151,7 @@ const ProfileForm = () => {
 
               {/* Navigation Buttons */}
               <motion.div
-                className="flex justify-between mt-8"
+                className="flex justify-between mt-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}

@@ -517,7 +517,7 @@ const LearningPathDetails = () => {
                         <p>This module focuses on {selectedModule.title} concepts and techniques.</p>
                       )}
 
-                      <div className="mt-6 flex items-center justify-center">
+                      <div className="mt-4 flex items-center justify-center">
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}

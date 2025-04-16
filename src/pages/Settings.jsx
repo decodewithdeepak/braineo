@@ -156,7 +156,7 @@ const Settings = () => {
   }
 
   return (
-    <div className="min-h-screen pb-12 md:pb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50 p-4 md:p-6 mt-8">
+    <div className="min-h-screen pb-12 md:pb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50 p-4 md:p-6 mt-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -280,7 +280,7 @@ const Settings = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mx-auto mt-8 space-y-6"
+        className="max-w-4xl mx-auto mt-4 space-y-6"
       >
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

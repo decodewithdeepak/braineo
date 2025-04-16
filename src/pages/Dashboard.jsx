@@ -338,7 +338,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="flex-1 max-w-full p-4 md:p-6 mt-8 overflow-x-hidden bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div className="flex-1 max-w-full p-4 md:p-6 mt-4 overflow-x-hidden bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -381,7 +381,7 @@ const Dashboard = () => {
             </motion.div>
 
             {/* Stats cards */}
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               <div className="bg-white/40 p-4 rounded-xl shadow-sm">
                 <p className="text-gray-500 text-sm">Paths Progress</p>
                 <p className="text-2xl font-semibold">{paths.length}</p>
@@ -473,7 +473,7 @@ const Dashboard = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"
               >
                 {aiNudges.map((nudge, index) => (
                   <NudgeCard

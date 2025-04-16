@@ -196,7 +196,7 @@ const Flashcards = () => {
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 p-4 sm:p-8 mt-8"
+      className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 p-4 sm:p-8 mt-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -378,7 +378,7 @@ const Flashcards = () => {
                 />
 
                 {/* Navigation Controls */}
-                <div className="flex justify-between items-center w-full mt-8 px-4">
+                <div className="flex justify-between items-center w-full mt-4 px-4">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
