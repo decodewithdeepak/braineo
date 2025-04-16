@@ -9,7 +9,6 @@ import { Query } from "appwrite";
 
 const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const { user, loading, logout, isAuthenticated } = useAuth();
 
@@ -18,12 +17,6 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
   useEffect(() => {
     if (user) fetchUserProgress();
   }, [user]);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const fetchUserProgress = async () => {
     try {
@@ -193,10 +186,8 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className={`${
-          isScrolled ? "bg-white/60" : "bg-transparent"
-        } backdrop-blur-md border-b border-purple-100/70 px-3 sm:px-4 md:px-8 py-3
-          flex justify-between items-center fixed top-0 w-full z-[999] shadow-sm transition-colors duration-300`}
+        className="bg-white/10 backdrop-blur-md border-b border-purple-100/70 px-3 sm:px-4 md:px-8 py-3
+          flex justify-between items-center fixed top-0 w-full z-[999] shadow-sm"
       >
         <div className="flex items-center gap-2 md:gap-4">
           {isDashboard && (
