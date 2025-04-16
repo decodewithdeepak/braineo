@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { account } from '../config/appwrite';
 import { useNavigate } from 'react-router-dom';
+import { databases } from '../config/database';
+import { Query } from 'appwrite';
 
 const AuthContext = createContext();
 
@@ -8,6 +10,22 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // Check if user profile exists in the database
+  const checkUserProfile = async (userId) => {
+    try {
+      const response = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_USERS_COLLECTION_ID,
+        [Query.equal("userID", userId)]
+      );
+      
+      return response.documents.length > 0;
+    } catch (error) {
+      console.error("Error checking user profile:", error);
+      return false;
+    }
+  };
 
   const checkUser = async () => {
     try {
@@ -49,8 +67,19 @@ export const AuthProvider = ({ children }) => {
       const session = await account.createEmailPasswordSession(email, password);
       const userData = await account.get();
       setUser(userData);
+      
+      // Check if user has completed profile setup
+      const hasProfile = await checkUserProfile(userData.$id);
+      
       setLoading(false);
-      navigate('/dashboard', { replace: true });
+      
+      // Redirect to profile setup if new user, otherwise to dashboard
+      if (!hasProfile) {
+        navigate('/profile', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
+      
       return userData;
     } catch (error) {
       setLoading(false);
@@ -63,6 +92,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await account.create('unique()', email, password, name);
       await login(email, password);
+      // The login function will now handle redirection to profile setup
     } catch (error) {
       throw error;
     }

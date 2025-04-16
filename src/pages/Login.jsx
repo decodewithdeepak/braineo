@@ -33,7 +33,8 @@ const Login = () => {
     
     try {
       await login(formData.email, formData.password);
-      window.location.href = '/dashboard';  // Use full page redirect
+      // The login function in AuthContext will handle proper redirection
+      // based on whether the user has a profile or not
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
       setLoading(false);

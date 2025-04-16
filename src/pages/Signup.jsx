@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { account } from '../config/appwrite';
-import { ID } from 'appwrite';
+import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -20,18 +20,9 @@ const Signup = () => {
     setError('');
 
     try {
-      // Create account
-      const account_response = await account.create(
-        ID.unique(),
-        formData.email,
-        formData.password,
-        formData.name
-      );
-
-      if (account_response.$id) {
-        await account.createEmailPasswordSession(formData.email, formData.password);
-        window.location.href = '/dashboard';  // Use full page redirect
-      }
+      // Use the signup method from AuthContext which will handle redirection
+      await signup(formData.email, formData.password, formData.name);
+      // No need for explicit redirect here - AuthContext will handle it
     } catch (error) {
       console.error("Signup error:", error);
       if (error.code === 409) {
@@ -41,7 +32,6 @@ const Signup = () => {
       } else {
         setError('Something went wrong. Please try again.');
       }
-    } finally {
       setLoading(false);
     }
   };

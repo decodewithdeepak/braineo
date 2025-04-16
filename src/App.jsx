@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -16,7 +16,31 @@ const App = ({ children }) => {
     "/home",
     "/reset-password",
   ].includes(location.pathname);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar starts closed
+  
+  // Check if screen is larger than mobile size for initial sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    return window.innerWidth >= 768; // Open by default on tablets/laptops (md breakpoint)
+  });
+  
+  // Update sidebar state when window is resized
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(true); // Keep sidebar open on larger screens
+      } else {
+        setIsSidebarOpen(false); // Close sidebar on mobile
+      }
+    };
+    
+    // Set initial state
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-white overflow-x-hidden">
