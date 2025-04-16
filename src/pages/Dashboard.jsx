@@ -141,11 +141,12 @@ const Dashboard = () => {
 
       let quizScoresData = [];
       let totalQuizScore = 0;
+      let totalQuizPossible = 0;
       let totalQuizCount = 0;
 
       // Process assessments data
       assessmentsResponse.documents.forEach(assessment => {
-        if (assessment.quizScore) {
+        if (assessment.quizScore !== undefined) {
           const score = parseInt(assessment.quizScore);
           const total = parseInt(assessment.quizTotal || 10);
 
@@ -160,6 +161,7 @@ const Dashboard = () => {
           });
 
           totalQuizScore += score;
+          totalQuizPossible += total;
           totalQuizCount += 1;
         }
       });
@@ -169,7 +171,7 @@ const Dashboard = () => {
       // Update user stats
       setUserStats(prev => ({
         ...prev,
-        avgQuizScore: totalQuizCount > 0 ? (totalQuizScore / totalQuizCount).toFixed(1) : 0
+        avgQuizScore: totalQuizCount > 0 ? `${totalQuizScore}/${totalQuizPossible}` : "0/0"
       }));
 
       // Calculate streak from quiz dates
@@ -257,12 +259,12 @@ const Dashboard = () => {
   const calculateSuccessRate = () => {
     if (!quizScores.length) return 0; // Avoid division by zero
 
-    const totalAccuracy = quizScores.reduce(
-      (sum, score) => sum + parseFloat(score.accuracy),
-      0
-    );
-
-    return (totalAccuracy / quizScores.length).toFixed(1); // Average accuracy
+    // Calculate total scores and total possible scores across all quizzes
+    const totalScored = quizScores.reduce((sum, quiz) => sum + quiz.score, 0);
+    const totalPossible = quizScores.reduce((sum, quiz) => sum + quiz.total, 0);
+    
+    // Calculate percentage of total score
+    return totalPossible > 0 ? ((totalScored / totalPossible) * 100).toFixed(1) : 0;
   };
 
   const formatDate = (dateString) => {
@@ -381,7 +383,7 @@ const Dashboard = () => {
                   <div className="px-4 py-2 bg-gray-100 rounded-xl w-24 h-9 animate-pulse"></div>
                 ) : (
                   <div className="px-4 py-2 bg-indigo-100 text-indigo-600 rounded-xl">
-                    Avg Quiz: {userStats.avgQuizScore}/10
+                    Average Quiz Score: {userStats.avgQuizScore}
                   </div>
                 )}
               </div>
@@ -480,7 +482,7 @@ const Dashboard = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6"
               >
                 {aiNudges.map((nudge, index) => (
                   <NudgeCard

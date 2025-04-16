@@ -851,7 +851,7 @@ const ProfileForm = () => {
 
                   <motion.div variants={itemVariants} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
+                      <label className="text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
                         <RiUserLine /> Your Name
                       </label>
                       <input
@@ -864,7 +864,7 @@ const ProfileForm = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
+                      <label className="text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
                         <RiCalendarLine /> Your Age
                       </label>
                       <input
@@ -910,7 +910,7 @@ const ProfileForm = () => {
 
                   <motion.div variants={itemVariants} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
+                      <label className="text-sm font-medium text-blue-700 mb-1 flex items-center gap-2">
                         <RiFlag2Line /> Career Goal
                       </label>
                       <textarea

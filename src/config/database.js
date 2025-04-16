@@ -232,6 +232,18 @@ export const markModuleComplete = async (pathId, moduleIndex) => {
 
 export const saveQuizScore = async ({ userID, pathID, moduleID, moduleName, score, feedback, timestamp }) => {
   try {
+    // Parse the total questions from the feedback string or default to 50
+    let quizTotal = 50; // Default value
+    const accuracyMatch = feedback?.match(/Accuracy:\s*(\d+(?:\.\d+)?)%/);
+    if (accuracyMatch) {
+      const accuracy = parseFloat(accuracyMatch[1]);
+      // If we have accuracy, we can calculate the actual total
+      // score / (accuracy/100) = total possible points
+      if (accuracy > 0) {
+        quizTotal = Math.round((score / (accuracy / 100)));
+      }
+    }
+    
     const res = await databases.createDocument(
       import.meta.env.VITE_APPWRITE_DATABASE_ID,
       "assessments", // 👈 Collection ID
@@ -240,12 +252,11 @@ export const saveQuizScore = async ({ userID, pathID, moduleID, moduleName, scor
         userID,
         pathID,
         moduleID,
-        moduleName, // ✅ added module title
-        quizScore: score, // Keep this required field
-        quizTotal: 10 * (score / 10), // Adding the required quizTotal field based on score
+        moduleName,
+        quizScore: score, // The actual score achieved
+        quizTotal: quizTotal, // The total possible score
         feedback,
         timestamp
-        // Removed "score" field which is not in the schema
       }
     );
     console.log("✅ Score saved in assessments:", res);
