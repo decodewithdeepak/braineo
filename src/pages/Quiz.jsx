@@ -450,7 +450,7 @@ const Quiz = () => {
 
   if (!quizData) {
     return (
-      <div className="min-h-[calc(100vh-80px)] bg-gradient-to-b from-blue-50 via-white to-blue-50 p-4 sm:p-8">
+      <div className="min-h-[calc(100vh-80px)] bg-gradient-to-b from-blue-50 via-white to-blue-50 p-4 sm:p-8 mt-8">
         <motion.div
           className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-4 sm:p-8"
           initial={{ opacity: 0, y: 20 }}

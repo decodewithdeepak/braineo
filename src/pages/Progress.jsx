@@ -64,7 +64,7 @@ const Progress = () => {
 
   return (
     <motion.div
-      className="flex flex-col items-center pb-14 p-6 bg-white min-h-screen"
+      className="flex flex-col items-center pb-14 p-6 bg-white min-h-screen mt-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}

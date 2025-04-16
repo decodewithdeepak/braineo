@@ -249,7 +249,7 @@ const Chat = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-0 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-0 sm:p-6 mt-8">
       <div className="h-[100dvh] sm:h-auto max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-none sm:rounded-2xl shadow-xl border-0 sm:border border-blue-100/30 overflow-hidden flex flex-col">
         {/* Enhanced Header */}
         <div className="p-4 sm:p-6 border-b border-purple-100/30 bg-white/50">

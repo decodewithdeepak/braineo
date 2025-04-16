@@ -156,7 +156,7 @@ const Settings = () => {
   }
 
   return (
-    <div className="min-h-screen pb-12 md:pb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50 p-4 md:p-6">
+    <div className="min-h-screen pb-12 md:pb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-purple-50 p-4 md:p-6 mt-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -181,7 +181,7 @@ const Settings = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex items-center gap-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center text-3xl font-bold rounded-2xl">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center text-5xl font-bold rounded-2xl">
                 {formData.name[0]}
               </div>
               <div className="flex-1">
@@ -189,6 +189,14 @@ const Settings = () => {
                 <p className="text-gray-700">
                   {new Date(user?.$createdAt).toLocaleDateString()}
                 </p>
+                <motion.a
+                  href="/reset-password"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block mt-2 text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  Reset Password
+                </motion.a>
               </div>
             </div>
 

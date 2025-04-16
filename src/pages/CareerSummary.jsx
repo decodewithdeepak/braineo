@@ -137,7 +137,7 @@ const CareerSummary = () => {
   }
 
   return (
-    <div className="md:p-6 min-h-screen bg-gradient-to-br from-sky-100 to-blue-100 space-y-10">
+    <div className="md:p-6 min-h-screen bg-gradient-to-br from-sky-100 to-blue-100 space-y-10 mt-8">
       {careerSummaries.map((summary, index) => {
         const pieData = [
           { name: 'Completed', value: summary.data.completed },

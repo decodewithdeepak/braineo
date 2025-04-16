@@ -387,7 +387,7 @@ const LearningPath = () => {
   }, [careerPaths, loading, error]);
 
   return (
-    <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 p-6 relative overflow-hidden">
+    <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 p-6 relative overflow-hidden mt-8">
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>

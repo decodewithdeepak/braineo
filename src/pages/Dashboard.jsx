@@ -338,7 +338,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="flex-1 max-w-full p-4 md:p-6 overflow-x-hidden bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div className="flex-1 max-w-full p-4 md:p-6 mt-8 overflow-x-hidden bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
