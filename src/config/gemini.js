@@ -485,7 +485,7 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Generate a 5-question quiz for the topic: "${moduleName}" with 4 options each and the correct answer marked.
+    const prompt = `Generate a ${numQuestions}-question quiz for the topic: "${moduleName}" with 4 options each and the correct answer marked.
     
     **Requirements:**
     - Each question should test understanding of ${moduleName} concepts
@@ -502,7 +502,7 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
           "correctIndex": 0,
           "explanation": "Brief explanation of why this is correct"
         },
-        // 4 more questions following the same format
+        // ${numQuestions-1} more questions following the same format
       ]
     }`;
 
@@ -517,43 +517,34 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
         throw new Error("Invalid quiz format");
       }
 
+      // Ensure we have exactly the requested number of questions
+      if (quizData.questions.length > numQuestions) {
+        // Trim if we got more questions than requested
+        quizData.questions = quizData.questions.slice(0, numQuestions);
+      } else if (quizData.questions.length < numQuestions) {
+        // Add generic questions if we got fewer than requested
+        const missingCount = numQuestions - quizData.questions.length;
+        for (let i = 0; i < missingCount; i++) {
+          quizData.questions.push({
+            question: `Additional question ${i+1} about ${moduleName}?`,
+            options: ["Option A", "Option B", "Option C", "Option D"],
+            correctIndex: 0,
+            explanation: `This is the correct answer for additional question ${i+1}.`
+          });
+        }
+      }
+
       return quizData;
     } catch (error) {
       console.error("Quiz parsing error:", error);
       // Fallback quiz if parsing fails
       return {
-        questions: [
-          {
-            question: `What is the main focus of ${moduleName}?`,
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctIndex: 0,
-            explanation: "This is the correct answer based on the module content."
-          },
-          {
-            question: `Which of these is NOT related to ${moduleName}?`,
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctIndex: 1,
-            explanation: "This option is unrelated to the topic."
-          },
-          {
-            question: `What is a key principle in ${moduleName}?`,
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctIndex: 2,
-            explanation: "This principle is fundamental to understanding the topic."
-          },
-          {
-            question: `How does ${moduleName} apply to real-world scenarios?`,
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctIndex: 3,
-            explanation: "This reflects the practical application of the concept."
-          },
-          {
-            question: `What advanced technique is associated with ${moduleName}?`,
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctIndex: 0,
-            explanation: "This is an advanced technique in this field."
-          }
-        ]
+        questions: Array.from({ length: numQuestions }, (_, i) => ({
+          question: `Question ${i + 1} about ${moduleName}?`,
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correctIndex: 0,
+          explanation: "This is the correct answer based on the module content."
+        }))
       };
     }
   } catch (error) {

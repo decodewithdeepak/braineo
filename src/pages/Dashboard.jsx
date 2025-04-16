@@ -383,7 +383,7 @@ const Dashboard = () => {
                   <div className="px-4 py-2 bg-gray-100 rounded-xl w-24 h-9 animate-pulse"></div>
                 ) : (
                   <div className="px-4 py-2 bg-indigo-100 text-indigo-600 rounded-xl">
-                    Average Quiz Score: {userStats.avgQuizScore}
+                    Total Quiz Score: {userStats.avgQuizScore}
                   </div>
                 )}
               </div>

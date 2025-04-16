@@ -280,7 +280,7 @@ const Quiz = () => {
   
     setLoading(true);
     try {
-      const quizData = await generateQuiz(topic, numQuestions);
+      const quizData = await generateQuiz(topic, parseInt(numQuestions));
   
       // Format quizData if needed to match your structure
       const formattedData = {
@@ -518,8 +518,11 @@ const Quiz = () => {
               </label>
               <input
                 type="number"
-                value={numQuestions}
-                onChange={(e) => setNumQuestions(parseInt(e.target.value))}
+                value={numQuestions || ""}
+                onChange={(e) => {
+                  const value = e.target.value === "" ? "" : parseInt(e.target.value);
+                  setNumQuestions(value === "" ? "" : (isNaN(value) ? 5 : value));
+                }}
                 min="1"
                 max="10"
                 className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
