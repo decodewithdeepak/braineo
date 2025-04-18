@@ -14,13 +14,13 @@ import {
 
 const Footer = () => {
   const handleReportBug = () => {
-    window.location.href = "mailto:deepakmodidev@gmail.com?subject=Report%20Feedback/Bug%20on%20NeoLearn";
+    window.location.href = "mailto:deepakmodidev@gmail.com?subject=Report%20Feedback/Bug%20on%20Braineo";
   };
 
   const socialLinks = [
     { 
       icon: <RiGithubFill className="w-6 h-6" />, 
-      href: 'https://github.com/decodewithdeepak/NeoLearn',
+      href: 'https://github.com/decodewithdeepak/Braineo',
       label: 'GitHub'
     },
     { 
@@ -43,7 +43,7 @@ const Footer = () => {
             >
               <RiBrainLine className="text-3xl text-purple-600" /> {/* Changed icon and color to match Navbar */}
               <div className="text-2xl font-bold bg-gradient-to-r from-purple-700 to-blue-500 bg-clip-text text-transparent">
-                NeoLearn
+                Braineo
               </div>
             </motion.div>
             <motion.p 
@@ -54,12 +54,12 @@ const Footer = () => {
             >
               Made with <RiHeartFill className="text-red-500 animate-pulse" /> by
               <a 
-                href="https://NeoLearn.vercel.app" 
+                href="https://braineo.vercel.app" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
               >
-                Team NeoLearn
+                Team Braineo
                 <RiCodeSSlashFill className="w-4 h-4" />
               </a>
             </motion.p>
@@ -107,7 +107,7 @@ const Footer = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          © {new Date().getFullYear()} NeoLearn. All rights reserved.
+          © {new Date().getFullYear()} Braineo. All rights reserved.
         </motion.p>
       </div>
     </footer>

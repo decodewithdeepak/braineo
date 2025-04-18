@@ -12,7 +12,7 @@ export const sendPasswordRecovery = async (email) => {
     try {
         await account.createRecovery(
             email,
-            'https://neolearn.vercel.app/reset-password'
+            'https://braineo.vercel.app/reset-password'
         );
         return { success: true };
     } catch (error) {

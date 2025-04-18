@@ -274,7 +274,7 @@ const Chat = () => {
               </div>
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  AI Learning Assistant
+                  Braineo AI Learning Assistant
                 </h1>
                 {pathsData && (
                   <p className="text-sm text-gray-600 mt-1">

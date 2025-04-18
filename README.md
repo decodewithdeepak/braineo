@@ -1,15 +1,15 @@
-# 🚀 NeoLearn
+# 🚀 Braineo
 
 > _AI-Powered Career Guidance Platform for Students_  
-> 🌐 **Live Demo**: [neolearn.vercel.app](https://neolearn.vercel.app/)
+> 🌐 **Live Demo**: [braineo.vercel.app](https://braineo.vercel.app/)
 ## 📸 App Screenshot
 
-![NeoLearn Screenshot](public/banner.webp)
+![Braineo Screenshot](public/banner.webp)
 ---
 
 ## 🧠 About the Project
 
-**NeoLearn** is an AI-powered web application that helps students discover and pursue personalized learning paths tailored to their **skills**, **interests**, **age**, and **career goals**.
+**Braineo** is an AI-powered web application that helps students discover and pursue personalized learning paths tailored to their **skills**, **interests**, **age**, and **career goals**.
 
 By filling a short profile, students receive:
 - 🎯 A structured learning journey
@@ -50,8 +50,8 @@ These are generated in real-time using **Gemini Flash 2.0** and **Llama 3.3 70B*
 ```env
 # Appwrite Config
 VITE_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
-VITE_APPWRITE_PROJECT_ID=NeoLearn
-VITE_APPWRITE_DATABASE_ID=NeoLearn
+VITE_APPWRITE_PROJECT_ID=Braineo
+VITE_APPWRITE_DATABASE_ID=Braineo
 VITE_USERS_COLLECTION_ID=users
 VITE_CAREER_PATHS_COLLECTION_ID=career-paths
 VITE_ASSESSMENTS_COLLECTION_ID=assessments
@@ -68,8 +68,8 @@ VITE_GROQ_API_KEY=your_groq_key_here
 ## 📦 Getting Started
 
 ```bash
-git clone https://github.com/decodewithdeepak/NeoLearn.git
-cd NeoLearn
+git clone https://github.com/decodewithdeepak/braineo.git
+cd Braineo
 npm install
 cp .env.example .env   # Replace with your actual API keys
 npm run dev

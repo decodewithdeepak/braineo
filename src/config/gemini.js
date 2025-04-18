@@ -1252,7 +1252,7 @@ export const generateCareerSummary = async ({ user, careerPath, assessments }) =
 
     
     const prompt =
-      `You are NeoLearn – an AI career coach and motivational mentor for students on their learning journey.
+      `You are Braineo – an AI career coach and motivational mentor for students on their learning journey.
     
     Generate a detailed, emotionally supportive, and strategic career summary report for the following user based on their current learning progress, completed modules, quiz feedback, career goal, and interests.
     

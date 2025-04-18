@@ -237,7 +237,7 @@ const Navbar = ({ isDashboard, isSidebarOpen, setIsSidebarOpen }) => {
             </motion.div>
             <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-700 
               to-blue-500 bg-clip-text text-transparent truncate">
-              NeoLearn
+              Braineo
             </span>
           </motion.div>
         </div>

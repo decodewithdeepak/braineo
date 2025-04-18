@@ -81,7 +81,7 @@ const testimonials = [
     name: "Deepak Modi",
     role: "Frontend Dev",
     avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-    quote: "NeoLearn completely transformed how I learn. The AI recommendations are spot-on!",
+    quote: "Braineo completely transformed how I learn. The AI recommendations are spot-on!",
   },
   {
     name: "Shetal Bhardwaj",
@@ -103,12 +103,12 @@ const faqs = [
     a: "Our AI analyzes your performance, preferences, and goals to adaptively recommend modules, track your growth, and optimize your learning path.",
   },
   {
-    q: "Is NeoLearn suitable for complete beginners?",
-    a: "Absolutely! Whether you're a beginner or an advanced learner, NeoLearn adjusts difficulty and content to match your level.",
+    q: "Is Braineo suitable for complete beginners?",
+    a: "Absolutely! Whether you're a beginner or an advanced learner, Braineo adjusts difficulty and content to match your level.",
   },
   {
     q: "Can I learn at my own pace?",
-    a: "Yes! NeoLearn is fully self-paced. You can pause, resume, or skip modules anytime you like.",
+    a: "Yes! Braineo is fully self-paced. You can pause, resume, or skip modules anytime you like.",
   },
   {
     q: "What kind of content is available?",
@@ -228,7 +228,7 @@ const HeroSection = ({ navigate }) => {
           >
             <motion.div variants={itemVariants} className="flex justify-center">
               <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-600 border border-blue-200 shadow-sm">
-                <span className="mr-2">🎓</span> AI-Powered Education Platform
+                <span className="mr-2">🧠</span> AI-Powered Learning Platform
               </span>
             </motion.div>
 
@@ -236,7 +236,7 @@ const HeroSection = ({ navigate }) => {
               <span className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 animate-gradient-x">
                 Learn Smarter, Not Harder
               </span>
-              <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">With Personalized AI Guidance</span>
+              <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">With Braineo AI Guidance</span>
             </motion.h1>
 
             <motion.p variants={itemVariants} className="max-w-3xl mx-auto text-base sm:text-lg lg:text-xl text-gray-600">
