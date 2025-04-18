@@ -227,20 +227,22 @@ const HeroSection = ({ navigate }) => {
             className="space-y-8"
           >
             <motion.div variants={itemVariants} className="flex justify-center">
-              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-600 border border-blue-200 shadow-sm">
-                <span className="mr-2">🧠</span> AI-Powered Learning Platform
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 border border-blue-300 shadow-md">
+                <span role="img" aria-label="brain">🧠</span> AI-Powered Learning Platform
               </span>
             </motion.div>
 
-            <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+            <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-center">
               <span className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 animate-gradient-x">
-                Learn Smarter, Not Harder
+                Empower Your Learning Journey
               </span>
-              <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">With Braineo AI Guidance</span>
+              <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">
+                With The Intelligence of Braineo
+              </span>
             </motion.h1>
 
-            <motion.p variants={itemVariants} className="max-w-3xl mx-auto text-base sm:text-lg lg:text-xl text-gray-600">
-              Experience a revolutionary learning journey with AI that adapts to your pace, style, and goals. Get personalized paths, instant feedback, and structured practice.
+            <motion.p variants={itemVariants} className="max-w-3xl mx-auto mt-4 text-center text-base sm:text-lg lg:text-xl text-gray-600">
+              Unlock a revolutionary learning journey where AI adapts to your pace, style, and goals. Personalized paths, real-time feedback, and intelligent practice — all in one place.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
