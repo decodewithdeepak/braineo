@@ -232,12 +232,12 @@ const HeroSection = ({ navigate }) => {
               </span>
             </motion.div>
 
-            <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-center">
+            <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight text-center">
               <span className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 animate-gradient-x">
-                Empower Your Learning Journey
+                You + AI = Braineo Mode
               </span>
               <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">
-                With The Intelligence of Braineo
+                Let’s Make Learning Kinda Epic
               </span>
             </motion.h1>
 
