@@ -381,10 +381,10 @@ const StatsSection = () => {
           <span className="inline-block px-3 py-1 bg-white/60 backdrop-blur-sm text-blue-600 rounded-full text-sm font-medium mb-4">
             Achievements
           </span>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
             Our Impact in Numbers
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
             Join thousands of learners who are already transforming their skills with our platform
           </p>
         </div>
@@ -420,15 +420,18 @@ const TestimonialsSection = () => {
       <div className="absolute left-0 bottom-0 w-64 h-64 bg-indigo-100 rounded-full filter blur-3xl opacity-30"></div>
 
       <div className="max-w-7xl mx-auto text-center relative z-10">
-        <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm font-medium mb-4">
-          Testimonials
-        </span>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-          What Learners Are Saying
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-10 md:mb-16">
-          Don't just take our word for it - hear from our community of successful learners
-        </p>
+        <div className="text-center mb-10 md:mb-16">
+
+          <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm font-medium mb-4">
+            Testimonials
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            What Learners Are Saying
+          </h2>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Don't just take our word for it - hear from our community of successful learners
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {testimonials.map((t, index) => (
@@ -466,15 +469,17 @@ const FaqSection = () => {
       <div className="absolute left-0 bottom-1/4 w-64 h-64 bg-indigo-50 rounded-full filter blur-3xl opacity-50"></div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
-          FAQ
-        </span>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-          Frequently Asked Questions
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-10 md:mb-16">
-          Find answers to common questions about our platform and learning methods
-        </p>
+        <div className="text-center mb-10 md:mb-16">
+          <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
+            FAQ
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Find answers to common questions about our platform and learning methods
+          </p>
+        </div>
 
         <div className="space-y-4 md:space-y-5 text-left">
           {faqs.map((item, i) => (
