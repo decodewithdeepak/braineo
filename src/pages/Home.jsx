@@ -71,7 +71,7 @@ const features = [
 
 const stats = [
   { number: "10K+", label: "Active Learners" },
-  { number: "50+", label: "Learning Paths" },
+  { number: "1000+", label: "Learning Paths" },
   { number: "95%", label: "Success Rate" },
   { number: "24/7", label: "AI Assistance" },
 ];
