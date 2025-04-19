@@ -117,10 +117,15 @@ const faqs = [
 ];
 
 // Component for animated counter
-const AnimatedCounter = ({ target, duration = 4000 }) => {
+const AnimatedCounter = ({ target, duration = 2000 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+
+  // Special case for non-numeric values like "24/7"
+  if (target === "24/7") {
+    return <span ref={ref}>{target}</span>;
+  }
 
   useEffect(() => {
     if (!isInView) return;
@@ -133,8 +138,9 @@ const AnimatedCounter = ({ target, duration = 4000 }) => {
     const rawNumber = parseInt(target.replace(/\D/g, ""), 10);
     const end = hasK ? rawNumber * 1000 : rawNumber;
 
-    const totalSteps = Math.floor(duration / 40);
-    const step = Math.max(1, Math.floor(end / totalSteps));
+    // Increase animation speed by reducing total steps and increasing step size
+    const totalSteps = Math.floor(duration / 20); // Changed from 40 to 20
+    const step = Math.max(1, Math.floor(end / totalSteps) * 2); // Double the step size
 
     const timer = setInterval(() => {
       start += step;
@@ -144,7 +150,7 @@ const AnimatedCounter = ({ target, duration = 4000 }) => {
       } else {
         setCount(start);
       }
-    }, 40);
+    }, 20); // Reduced from 40ms to 20ms for faster updates
 
     return () => clearInterval(timer);
   }, [isInView, target, duration]);
