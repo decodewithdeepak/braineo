@@ -195,7 +195,6 @@ const CareerSummary = () => {
               </div>
 
 
-
               <hr style={{ margin: "15px 0" }} />
               {summary.summaryText.split("\n\n").map((block, idx) => {
                 const formatted = block
@@ -205,7 +204,6 @@ const CareerSummary = () => {
                 return (
                   <div key={idx} dangerouslySetInnerHTML={{ __html: formatted }} />
                 );
-                <br />
               })}
             </div>
 
