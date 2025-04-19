@@ -242,14 +242,14 @@ const ModuleDetails = () => {
   }, [pathId, moduleIndex]);
 
   const LoadingScreen = () => (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gradient-to-br rounded-2xl from-slate-50 to-purple-50">
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gradient-to-br rounded-2xl from-slate-50 to-blue-50">
       <motion.div
         className="relative w-16 h-16"
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       >
-        <div className="absolute inset-0 rounded-full border-4 border-purple-100" />
-        <div className="absolute inset-0 rounded-full border-4 border-t-purple-600 border-r-transparent border-b-transparent border-l-transparent" />
+        <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
+        <div className="absolute inset-0 rounded-full border-4 border-t-blue-600 border-r-transparent border-b-transparent border-l-transparent" />
       </motion.div>
       <motion.p
         initial={{ opacity: 0 }}
@@ -274,7 +274,7 @@ const ModuleDetails = () => {
 
   if (contentError || error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-purple-50 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -462,7 +462,7 @@ const ModuleDetails = () => {
           </SyntaxHighlighter>
         </div>
       ) : (
-        <code className="bg-purple-50 px-1.5 py-0.5 rounded text-xs sm:text-sm" {...props}>
+        <code className="bg-blue-50 px-1.5 py-0.5 rounded text-xs sm:text-sm" {...props}>
           {children}
         </code>
       );
@@ -547,7 +547,7 @@ const ModuleDetails = () => {
         </motion.div>
 
         {/* Enhanced Content section with elaboration buttons */}
-        <motion.div className="prose prose-purple max-w-none space-y-3 md:space-y-6">
+        <motion.div className="prose prose-blue max-w-none space-y-3 md:space-y-6">
           {content?.sections?.map((section, index) => (
             <motion.div
               key={index}
