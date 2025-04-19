@@ -133,7 +133,24 @@ const CareerSummary = () => {
   };
 
   if (loading) {
-    return <div className="h-screen flex items-center justify-center text-blue-600">Generating career summaries...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-4">
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <motion.div
+            className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <p className="text-lg font-semibold text-blue-600">
+            Generating Career Summary...
+          </p>
+        </motion.div>
+      </div>
+    );
   }
 
   return (
