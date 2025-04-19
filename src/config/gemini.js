@@ -485,13 +485,18 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+    // Calculate how many multiple-choice questions to include (roughly 1 in 5)
+    const multipleChoiceCount = Math.max(1, Math.floor(numQuestions / 5));
+
     const prompt = `Generate a ${numQuestions}-question quiz for the topic: "${moduleName}" with 4 options each and the correct answer marked.
     
     **Requirements:**
     - Each question should test understanding of ${moduleName} concepts
     - Include a mix of difficulty levels (basic to advanced)
+    - Include exactly ${multipleChoiceCount} multiple-choice question(s) where more than one answer is correct
     - Provide 4 answer options for each question (a, b, c, d format)
-    - Clearly mark the correct answer
+    - For single-choice questions, clearly mark the one correct answer
+    - For multiple-choice questions, clearly mark all correct answers
     - Format as a JSON object:
 
     {
@@ -499,8 +504,10 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
         {
           "question": "Question text here?",
           "options": ["Option A", "Option B", "Option C", "Option D"],
-          "correctIndex": 0,
-          "explanation": "Brief explanation of why this is correct"
+          "correctIndex": 0, // For single-choice questions
+          "correctIndices": [0, 2], // For multiple-choice questions (include this INSTEAD of correctIndex)
+          "explanation": "Brief explanation of why this is correct",
+          "isMultipleChoice": false // Set to true for multiple-choice questions
         },
         // ${numQuestions-1} more questions following the same format
       ]
@@ -517,6 +524,32 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
         throw new Error("Invalid quiz format");
       }
 
+      // Process the questions to ensure we have the right format for single and multiple-choice questions
+      quizData.questions = quizData.questions.map(q => {
+        // Handle multiple-choice questions
+        if (q.isMultipleChoice || q.correctIndices) {
+          const correctIndices = q.correctIndices || [0];
+          return {
+            question: q.question,
+            options: q.options || ["Option A", "Option B", "Option C", "Option D"],
+            correctAnswer: correctIndices.map(i => q.options[i]),
+            correctIndex: correctIndices, // Keep for backward compatibility
+            explanation: q.explanation || "This is the correct combination of answers.",
+            isMultipleChoice: true
+          };
+        } 
+        // Handle single-choice questions
+        else {
+          return {
+            question: q.question,
+            options: q.options || ["Option A", "Option B", "Option C", "Option D"],
+            correctIndex: typeof q.correctIndex === 'number' ? q.correctIndex : 0,
+            explanation: q.explanation || "This is the correct answer based on the module content.",
+            isMultipleChoice: false
+          };
+        }
+      });
+
       // Ensure we have exactly the requested number of questions
       if (quizData.questions.length > numQuestions) {
         // Trim if we got more questions than requested
@@ -529,9 +562,29 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
             question: `Additional question ${i+1} about ${moduleName}?`,
             options: ["Option A", "Option B", "Option C", "Option D"],
             correctIndex: 0,
-            explanation: `This is the correct answer for additional question ${i+1}.`
+            explanation: `This is the correct answer for additional question ${i+1}.`,
+            isMultipleChoice: false
           });
         }
+      }
+
+      // Ensure we have at least one multiple-choice question
+      let hasMultipleChoice = quizData.questions.some(q => q.isMultipleChoice || (Array.isArray(q.correctAnswer) && q.correctAnswer.length > 1));
+      
+      if (!hasMultipleChoice) {
+        // Convert one question to multiple choice
+        const randomIndex = Math.floor(Math.random() * quizData.questions.length);
+        const q = quizData.questions[randomIndex];
+        const correctOption = q.options[q.correctIndex];
+        const secondIndex = (q.correctIndex + 1) % q.options.length;
+        
+        quizData.questions[randomIndex] = {
+          ...q,
+          correctAnswer: [correctOption, q.options[secondIndex]],
+          correctIndex: [q.correctIndex, secondIndex],
+          explanation: `Both ${correctOption} and ${q.options[secondIndex]} are correct answers.`,
+          isMultipleChoice: true
+        };
       }
 
       return quizData;
@@ -539,12 +592,21 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
       console.error("Quiz parsing error:", error);
       // Fallback quiz if parsing fails
       return {
-        questions: Array.from({ length: numQuestions }, (_, i) => ({
-          question: `Question ${i + 1} about ${moduleName}?`,
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correctIndex: 0,
-          explanation: "This is the correct answer based on the module content."
-        }))
+        questions: Array.from({ length: numQuestions }, (_, i) => {
+          // Make one question multiple choice
+          const isMultiple = i === 1; // Make the second question multiple choice
+          
+          return {
+            question: `Question ${i + 1} about ${moduleName}?`,
+            options: ["Option A", "Option B", "Option C", "Option D"],
+            correctIndex: isMultiple ? [0, 2] : 0,
+            correctAnswer: isMultiple ? ["Option A", "Option C"] : ["Option A"],
+            explanation: isMultiple ? 
+              "Both Option A and Option C are correct based on the module content." : 
+              "This is the correct answer based on the module content.",
+            isMultipleChoice: isMultiple
+          };
+        })
       };
     }
   } catch (error) {

@@ -288,10 +288,16 @@ const Quiz = () => {
         questions: quizData.questions.map((q) => ({
           question: q.question,
           answers: q.options,
-          correctAnswer: [q.options[q.correctIndex]],
+          // If multiple correct answers are provided, handle as multiple choice
+          correctAnswer: Array.isArray(q.correctAnswer) ? 
+                        q.correctAnswer : 
+                        [q.options[q.correctIndex]],
           explanation: q.explanation,
           point: 10,
-          questionType: "single",
+          // Set questionType to "multiple" if the model provided multiple correct answers
+          questionType: Array.isArray(q.correctAnswer) && q.correctAnswer.length > 1 ? 
+                      "multiple" : 
+                      "single",
         })),
       };
   
@@ -318,12 +324,12 @@ const Quiz = () => {
         return { ...prev, [currentIndex]: [answer] }; // Only one can be selected
       }
 
-      const updatedAnswers = prev[currentIndex]
-        ? prev[currentIndex].includes(answer)
-          ? prev[currentIndex].filter((a) => a !== answer)
-          : [...prev[currentIndex], answer]
-        : [answer];
-
+      // For multiple-choice questions, toggle answers
+      const currentAnswers = prev[currentIndex] || [];
+      const updatedAnswers = currentAnswers.includes(answer)
+        ? currentAnswers.filter((a) => a !== answer) // Remove if already selected
+        : [...currentAnswers, answer]; // Add if not selected
+      
       return { ...prev, [currentIndex]: updatedAnswers };
     });
   };
@@ -421,7 +427,7 @@ const Quiz = () => {
           animate={{ opacity: 1 }}
         >
           <motion.div
-            className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"
+            className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
@@ -564,6 +570,12 @@ const Quiz = () => {
               </span>
               <span className="text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
                 Points: {currentQuestion.point}
+              </span>
+              {/* Add question type indicator */}
+              <span className="text-xs sm:text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                {currentQuestion.questionType === "multiple" ? 
+                  "Multiple answers" : 
+                  "Single answer"}
               </span>
             </div>
           </div>
