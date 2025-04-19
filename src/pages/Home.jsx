@@ -430,7 +430,7 @@ const TestimonialsSection = () => {
       <div className="max-w-7xl mx-auto text-center relative z-10">
         <div className="text-center mb-10 md:mb-16">
 
-          <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
             Testimonials
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
