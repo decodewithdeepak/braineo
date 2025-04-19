@@ -173,7 +173,7 @@ const FaqItem = ({ question, answer }) => {
         {question}
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
           ▼
         </motion.span>
@@ -181,15 +181,17 @@ const FaqItem = ({ question, answer }) => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.p
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="text-gray-600 mt-3 text-sm leading-relaxed"
+          <motion.div
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: 12 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
           >
-            {answer}
-          </motion.p>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              {answer}
+            </p>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
