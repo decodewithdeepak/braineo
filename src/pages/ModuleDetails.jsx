@@ -323,7 +323,7 @@ const ModuleDetails = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto"
+          className="fixed inset-0 z-[1000] bg-black/50 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto"
           onClick={(e) => {
             // Close popup when clicking the backdrop (outside the popup content)
             if (e.target === e.currentTarget) closePopup();
