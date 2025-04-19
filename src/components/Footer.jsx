@@ -5,10 +5,8 @@ import {
   RiMailFill,
   RiBugFill,
   RiHeartFill,
-  RiBrainLine, // Changed from RiReactjsLine to RiBrainLine for consistency
+  RiBrainLine,
   RiCodeSSlashFill,
-  RiInstagramLine,
-  RiLinkedinBoxFill,
   RiFeedbackFill 
 } from 'react-icons/ri';
 
