@@ -237,12 +237,12 @@ const HeroSection = ({ navigate }) => {
                 You + AI = Braineo Mode
               </span>
               <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">
-                Let’s Make Learning Kinda Epic
+                Smarter Learning Begins Here
               </span>
             </motion.h1>
 
             <motion.p variants={itemVariants} className="max-w-3xl mx-auto mt-4 text-center text-base sm:text-lg lg:text-xl text-gray-600">
-              Unlock a revolutionary learning journey where AI adapts to your pace, style, and goals. Personalized paths, real-time feedback, and intelligent practice — all in one place.
+              Say goodbye to boring. Braineo brings hyper-personalized learning, real-time feedback, and intelligent practice. You're not just learning - you're leveling up.
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
