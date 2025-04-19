@@ -235,7 +235,7 @@ const HeroSection = ({ navigate }) => {
             </motion.div>
 
             <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight text-center">
-              <span className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-blue-600 animate-gradient-x">
+              <span className="block font-extrabold text-blue-600">
                 You + AI = Braineo Mode
               </span>
               <span className="block mt-2 text-gray-900 text-3xl sm:text-4xl lg:text-5xl">
@@ -338,7 +338,7 @@ const FeaturesSection = () => {
           <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
             Features
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
             Why Choose Our Platform?
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
@@ -383,7 +383,7 @@ const StatsSection = () => {
           <span className="inline-block px-3 py-1 bg-white/60 backdrop-blur-sm text-blue-600 rounded-full text-sm font-medium mb-4">
             Achievements
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
             Our Impact in Numbers
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
@@ -401,7 +401,7 @@ const StatsSection = () => {
               transition={{ delay: index * 0.15 }}
               className="bg-white/80 backdrop-blur-sm rounded-xl p-5 md:p-6 border border-blue-100 hover:shadow-lg hover:-translate-y-1 transition-all shadow-md"
             >
-              <div className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+              <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
                 <AnimatedCounter target={stat.number} />
               </div>
               <div className="text-gray-600 text-xs md:text-sm mt-2">{stat.label}</div>
@@ -427,7 +427,7 @@ const TestimonialsSection = () => {
           <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-sm font-medium mb-4">
             Testimonials
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
             What Learners Are Saying
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
@@ -475,10 +475,10 @@ const FaqSection = () => {
           <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
             FAQ
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-600">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
             Find answers to common questions about our platform and learning methods
           </p>
         </div>
