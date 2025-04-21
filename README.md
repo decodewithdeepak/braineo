@@ -1,6 +1,6 @@
 # 🚀 Braineo
 
-> _AI-Powered Career Guidance Platform for Students_  
+> _AI-Powered Learning Platfrorm_  
 > 🌐 **Live Demo**: [braineo.vercel.app](https://braineo.vercel.app/)
 ## 📸 App Screenshot
 
@@ -9,7 +9,8 @@
 
 ## 🧠 About the Project
 
-**Braineo** is an AI-powered web application that helps students discover and pursue personalized learning paths tailored to their **skills**, **interests**, **age**, and **career goals**.
+Braineo is an innovative AI-powered learning platform designed to revolutionize personalized education through adaptive learning paths tailored to individual students' skills, interests, age, and career goals. The platform leverages cutting-edge AI technologies, specifically Google's Gemini Flash 2.0 and Llama 3.3 70B models, to generate personalized learning content, interactive quizzes, flashcards, and motivational nudges in real-time.
+
 
 By filling a short profile, students receive:
 - 🎯 A structured learning journey
