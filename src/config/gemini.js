@@ -14,11 +14,11 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const validateModuleContent = (content) => {
   if (!content?.title || !Array.isArray(content?.sections)) return false;
   if (content.sections.length === 0) return false;
-  
+
   // Validate each section has required fields
-  return content.sections.every(section => 
-    section.title && 
-    typeof section.content === 'string' && 
+  return content.sections.every(section =>
+    section.title &&
+    typeof section.content === 'string' &&
     section.content.length > 50
   );
 };
@@ -64,11 +64,11 @@ const sanitizeJSON = (text) => {
   try {
     // First, remove markdown code block markers
     let cleanedText = text.replace(/```(?:json)?/g, '').trim();
-    
+
     // Extract JSON object/array from response
     const jsonMatch = cleanedText.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
     if (!jsonMatch) return text;
-    
+
     // Clean up the extracted JSON
     let jsonText = jsonMatch[0]
       .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
@@ -78,14 +78,14 @@ const sanitizeJSON = (text) => {
       .replace(/,\s*}/g, '}')                        // Fix trailing commas
       .replace(/,\s*\]/g, ']')                       // Fix trailing commas
       .trim();
-    
+
     // Validate if it's parseable
     JSON.parse(jsonText);
-    
+
     return jsonText;
   } catch (error) {
     console.error('JSON sanitization error:', error);
-    
+
     // More aggressive fallback cleaning
     try {
       // Try to find and fix common JSON issues
@@ -95,7 +95,7 @@ const sanitizeJSON = (text) => {
         .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":') // Ensure property names are quoted
         .replace(/,(\s*[}\]])/g, '$1')     // Remove trailing commas
         .trim();
-      
+
       const match = attempt.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
       return match ? match[0] : text;
     } catch (e) {
@@ -114,7 +114,7 @@ const isCodeRelatedTopic = (topic) => {
   };
 
   const lowerTopic = topic.toLowerCase();
-  return Object.values(techKeywords).some(category => 
+  return Object.values(techKeywords).some(category =>
     category.some(keyword => lowerTopic.includes(keyword))
   );
 };
@@ -135,16 +135,16 @@ const GROQ_MODELS = [
 const groqCompletion = async (prompt, preferredModel = "llama3-70b-8192") => {
   // Start with preferred model, then fall back to others if needed
   const modelsToTry = [
-    preferredModel, 
+    preferredModel,
     ...GROQ_MODELS.filter(model => model !== preferredModel)
   ];
-  
+
   let lastError = null;
-  
+
   for (const modelName of modelsToTry) {
     try {
       console.log(`Trying GROQ with model: ${modelName}`);
-      
+
       const response = await axios.post(
         GROQ_API_URL,
         {
@@ -161,7 +161,7 @@ const groqCompletion = async (prompt, preferredModel = "llama3-70b-8192") => {
           }
         }
       );
-      
+
       console.log(`Successfully generated content with GROQ model: ${modelName}`);
       return response.data.choices[0].message.content;
     } catch (error) {
@@ -170,7 +170,7 @@ const groqCompletion = async (prompt, preferredModel = "llama3-70b-8192") => {
       // Continue to next model
     }
   }
-  
+
   // If we get here, all GROQ models failed
   throw new Error(`All GROQ models failed: ${lastError.message}`);
 };
@@ -182,11 +182,11 @@ export const generateModuleContent = async (moduleName, options = { detailed: fa
   }
 
   let lastError = null;
-  
+
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       const isTechTopic = isCodeRelatedTopic(moduleName);
-      
+
       // Enhanced prompt for content generation
       const prompt = `Generate factual educational content about: "${moduleName}"
 
@@ -237,10 +237,10 @@ export const generateModuleContent = async (moduleName, options = { detailed: fa
       // Try all GROQ models first with better error handling
       try {
         // Select preferred model based on content type
-        const preferredModel = isTechTopic && options.detailed 
+        const preferredModel = isTechTopic && options.detailed
           ? "llama3-70b-8192"  // Most powerful model for technical content
           : "llama3-70b-8192"; // Still use 70B for non-technical for consistency
-        
+
         const text = await groqCompletion(prompt, preferredModel);
         const cleanedText = sanitizeJSON(text);
         const content = JSON.parse(cleanedText);
@@ -259,12 +259,12 @@ export const generateModuleContent = async (moduleName, options = { detailed: fa
         return content;
       } catch (groqError) {
         console.warn("ALL GROQ models failed, falling back to Gemini:", groqError);
-        
+
         // Fall back to Gemini if all GROQ models fail
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(prompt);
         let text = result.response.text();
-        
+
         // Enhanced JSON cleaning and parsing
         text = sanitizeJSON(text);
         const content = JSON.parse(text);
@@ -354,9 +354,8 @@ export const generateFlashcards = async (topic, numCards = 5) => {
       return Array.from({ length: numCards }, (_, i) => ({
         id: i + 1,
         frontHTML: `Basic to advanced ${topic} question ${i + 1}?`,
-        backHTML: `Detailed answer explaining ${topic} at difficulty level ${
-          i + 1
-        }.`,
+        backHTML: `Detailed answer explaining ${topic} at difficulty level ${i + 1
+          }.`,
       }));
     }
   } catch (error) {
@@ -368,7 +367,7 @@ export const generateQuizData = async (topic, numQuestions, moduleContent = "") 
   try {
     // Check if we have valid content to work with
     const hasContent = moduleContent && moduleContent.trim().length > 50;
-    
+
     // Extract the topic title from formats like "Module 1: Introduction to React"
     let cleanTopic = topic;
     if (topic.includes(":")) {
@@ -382,7 +381,7 @@ export const generateQuizData = async (topic, numQuestions, moduleContent = "") 
         }
       }
     }
-    
+
     const result = await genAI.generateContent(`
       Create a quiz about "${cleanTopic}" with exactly ${numQuestions} questions.
       ${hasContent ? "Use the following content to create relevant questions:\n" + moduleContent.substring(0, 5000) : ""}
@@ -422,7 +421,7 @@ export const generateQuizData = async (topic, numQuestions, moduleContent = "") 
     `);
 
     const resultText = result.response.text();
-    
+
     // Extract JSON from the response
     const jsonMatch = resultText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
@@ -430,16 +429,16 @@ export const generateQuizData = async (topic, numQuestions, moduleContent = "") 
     }
 
     const quizData = JSON.parse(jsonMatch[0]);
-    
+
     // Ensure the topic is properly set in the response
     if (!quizData.topic || quizData.topic === "${topic}" || quizData.topic === cleanTopic) {
       quizData.topic = topic; // Use original topic for display purposes
     }
-    
+
     return quizData;
   } catch (error) {
     console.error("Error generating quiz:", error);
-    
+
     // Create a fallback quiz with the original topic
     return {
       topic: topic,
@@ -458,7 +457,7 @@ export const generateQuizData = async (topic, numQuestions, moduleContent = "") 
 export const generateChatResponse = async (message, context) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    
+
     // Create context-aware prompt
     const contextPrompt = `
       Context:
@@ -509,7 +508,7 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
           "explanation": "Brief explanation of why this is correct",
           "isMultipleChoice": false // Set to true for multiple-choice questions
         },
-        // ${numQuestions-1} more questions following the same format
+        // ${numQuestions - 1} more questions following the same format
       ]
     }`;
 
@@ -519,7 +518,7 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
     try {
       const cleanText = sanitizeJSON(text);
       const quizData = JSON.parse(cleanText);
-      
+
       if (!quizData.questions || !Array.isArray(quizData.questions) || quizData.questions.length === 0) {
         throw new Error("Invalid quiz format");
       }
@@ -537,7 +536,7 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
             explanation: q.explanation || "This is the correct combination of answers.",
             isMultipleChoice: true
           };
-        } 
+        }
         // Handle single-choice questions
         else {
           return {
@@ -559,10 +558,10 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
         const missingCount = numQuestions - quizData.questions.length;
         for (let i = 0; i < missingCount; i++) {
           quizData.questions.push({
-            question: `Additional question ${i+1} about ${moduleName}?`,
+            question: `Additional question ${i + 1} about ${moduleName}?`,
             options: ["Option A", "Option B", "Option C", "Option D"],
             correctIndex: 0,
-            explanation: `This is the correct answer for additional question ${i+1}.`,
+            explanation: `This is the correct answer for additional question ${i + 1}.`,
             isMultipleChoice: false
           });
         }
@@ -570,14 +569,14 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
 
       // Ensure we have at least one multiple-choice question
       let hasMultipleChoice = quizData.questions.some(q => q.isMultipleChoice || (Array.isArray(q.correctAnswer) && q.correctAnswer.length > 1));
-      
+
       if (!hasMultipleChoice) {
         // Convert one question to multiple choice
         const randomIndex = Math.floor(Math.random() * quizData.questions.length);
         const q = quizData.questions[randomIndex];
         const correctOption = q.options[q.correctIndex];
         const secondIndex = (q.correctIndex + 1) % q.options.length;
-        
+
         quizData.questions[randomIndex] = {
           ...q,
           correctAnswer: [correctOption, q.options[secondIndex]],
@@ -595,14 +594,14 @@ export const generateQuiz = async (moduleName, numQuestions = 5) => {
         questions: Array.from({ length: numQuestions }, (_, i) => {
           // Make one question multiple choice
           const isMultiple = i === 1; // Make the second question multiple choice
-          
+
           return {
             question: `Question ${i + 1} about ${moduleName}?`,
             options: ["Option A", "Option B", "Option C", "Option D"],
             correctIndex: isMultiple ? [0, 2] : 0,
             correctAnswer: isMultiple ? ["Option A", "Option C"] : ["Option A"],
-            explanation: isMultiple ? 
-              "Both Option A and Option C are correct based on the module content." : 
+            explanation: isMultiple ?
+              "Both Option A and Option C are correct based on the module content." :
               "This is the correct answer based on the module content.",
             isMultipleChoice: isMultiple
           };
@@ -633,17 +632,17 @@ export const generateLearningPath = async (goal, options = { type: 'topic', deta
   if (!goal || typeof goal !== "string") {
     throw new Error("Invalid goal/topic provided");
   }
-  
+
   // Determine if we're generating a simple topic path or a detailed career path
   const isCareerPath = options.type === 'career';
-  
+
   try {
-    const model = genAI.getGenerativeModel({ 
-      model: isCareerPath ? "gemini-1.5-pro" : "gemini-1.5-flash" 
+    const model = genAI.getGenerativeModel({
+      model: isCareerPath ? "gemini-1.5-pro" : "gemini-1.5-flash"
     });
 
     let prompt;
-    
+
     if (isCareerPath) {
       prompt = `Create a structured learning path for someone who wants to learn about "${goal}". 
       Design a series of modules (between 5-7) that progressively build knowledge from basics to advanced concepts.
@@ -672,22 +671,22 @@ export const generateLearningPath = async (goal, options = { type: 'topic', deta
       `;
     }
 
-    const result = await (isCareerPath ? 
-      retry(() => model.generateContent(prompt)) : 
+    const result = await (isCareerPath ?
+      retry(() => model.generateContent(prompt)) :
       model.generateContent(prompt));
-      
+
     const text = isCareerPath ? result.response.text() : result.response.text();
 
     try {
       // Extract JSON from the response
       const cleanText = sanitizeJSON(text);
-      
+
       if (isCareerPath) {
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
           const jsonString = jsonMatch[0];
           const modulesData = JSON.parse(jsonString);
-          
+
           // Validate and clean the data
           const cleanedModules = modulesData.map(module => ({
             title: module.title || `Learning ${goal}`,
@@ -695,7 +694,7 @@ export const generateLearningPath = async (goal, options = { type: 'topic', deta
             estimatedTime: module.estimatedTime || "1-2 hours",
             content: module.content || `This module will teach you about ${goal}`
           }));
-          
+
           return cleanedModules;
         } else {
           throw new Error("Failed to parse JSON");
@@ -709,7 +708,7 @@ export const generateLearningPath = async (goal, options = { type: 'topic', deta
       }
     } catch (error) {
       console.error("Parsing error:", error);
-      
+
       if (isCareerPath) {
         // Return a fallback career learning path
         return [
@@ -757,7 +756,7 @@ export const generateLearningPath = async (goal, options = { type: 'topic', deta
     }
   } catch (error) {
     console.error("Error generating learning path:", error);
-    
+
     if (isCareerPath) {
       // Return a fallback career learning path
       return [
@@ -813,10 +812,10 @@ export const generatePersonalizedCareerPaths = async (userData) => {
   try {
     // Use the faster Flash model instead of Pro for quicker responses
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    
+
     // Analyze quiz answers to determine career interests
     const quizAnalysis = analyzeQuizAnswers(userData.quizAnswers || {});
-    
+
     const prompt = `
     Create 4 highly personalized career/learning paths for a user with the following profile:
     
@@ -868,54 +867,54 @@ export const generatePersonalizedCareerPaths = async (userData) => {
     `;
 
     // Use Promise.race with a timeout to handle potentially slow responses
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Request timed out')), 30000)
     );
-    
+
     const resultPromise = retry(() => model.generateContent(prompt));
     const result = await Promise.race([resultPromise, timeoutPromise]);
-    
+
     const text = result.response.text();
-    
+
     try {
       const cleanText = sanitizeJSON(text);
       const careerPaths = JSON.parse(cleanText);
-      
+
       if (!Array.isArray(careerPaths) || careerPaths.length === 0) {
         throw new Error("Invalid career paths format");
       }
-      
+
       // Normalize to exactly 4 paths
       const normalizedPaths = careerPaths.slice(0, 4);
       while (normalizedPaths.length < 4) {
         // Clone and modify an existing path if we need more
-        const basePath = {...normalizedPaths[0]};
+        const basePath = { ...normalizedPaths[0] };
         basePath.pathName = `Alternative ${basePath.pathName}`;
         basePath.relevanceScore = Math.max(1, (basePath.relevanceScore || 80) - 10);
         normalizedPaths.push(basePath);
       }
-      
+
       // Validate and clean up each career path
       return normalizedPaths.map(path => ({
         pathName: path.pathName || "Career Path",
         description: path.description || `A learning path toward ${userData.careerGoal}`,
-        difficulty: ["beginner", "intermediate", "advanced"].includes(path.difficulty) ? 
+        difficulty: ["beginner", "intermediate", "advanced"].includes(path.difficulty) ?
           path.difficulty : "intermediate",
         estimatedTimeToComplete: path.estimatedTimeToComplete || "3 months",
-        relevanceScore: typeof path.relevanceScore === 'number' ? 
+        relevanceScore: typeof path.relevanceScore === 'number' ?
           Math.max(0, Math.min(100, path.relevanceScore)) : 85,
-        modules: Array.isArray(path.modules) ? 
+        modules: Array.isArray(path.modules) ?
           path.modules.slice(0, 5).map((module, idx) => ({
             title: module.title || `Module ${idx + 1}`,
             description: module.description || "Learn important skills in this area",
             estimatedHours: typeof module.estimatedHours === 'number' ? module.estimatedHours : 8,
             keySkills: Array.isArray(module.keySkills) ? module.keySkills : []
-          })) : 
+          })) :
           generateDefaultModules(path.pathName || "Career Path", 5)
       }));
     } catch (error) {
       console.error("Career path parsing error:", error);
-      
+
       // Generate fallback career paths based on quiz analysis and user data
       return generateFallbackCareerPaths(userData, quizAnalysis);
     }
@@ -931,7 +930,7 @@ const analyzeQuizAnswers = (quizAnswers) => {
   if (!quizAnswers || Object.keys(quizAnswers).length === 0) {
     return null;
   }
-  
+
   // Initialize interest area counters
   const interests = {
     technical: 0,  // A answers
@@ -940,7 +939,7 @@ const analyzeQuizAnswers = (quizAnswers) => {
     performance: 0, // D answers
     service: 0     // E answers
   };
-  
+
   // Count answers by type
   Object.values(quizAnswers).forEach(answer => {
     if (answer === 'A') interests.technical++;
@@ -949,10 +948,10 @@ const analyzeQuizAnswers = (quizAnswers) => {
     else if (answer === 'D') interests.performance++;
     else if (answer === 'E') interests.service++;
   });
-  
+
   // Calculate percentages 
   const totalAnswers = Object.keys(quizAnswers).length;
-  
+
   return {
     technical: Math.round((interests.technical / totalAnswers) * 100),
     creative: Math.round((interests.creative / totalAnswers) * 100),
@@ -967,7 +966,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
   const goal = userData.careerGoal || "tech career";
   const interests = userData.interests || ["programming", "technology"];
   const skills = userData.skills || ["basic coding"];
-  
+
   // Use quiz analysis if available to improve fallback paths
   if (quizAnalysis) {
     // Find the top two interest areas
@@ -975,7 +974,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 2)
       .map(entry => entry[0]);
-    
+
     const pathThemes = {
       technical: {
         name: "Technical Development",
@@ -1033,7 +1032,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
         ]
       }
     };
-    
+
     // Create paths based on top interests from quiz
     return [
       {
@@ -1044,7 +1043,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
         relevanceScore: 90,
         modules: pathThemes[interestAreas[0]].modules.map((title, i) => ({
           title,
-          description: `Step ${i+1} in mastering ${interestAreas[0]} skills related to ${goal}`,
+          description: `Step ${i + 1} in mastering ${interestAreas[0]} skills related to ${goal}`,
           estimatedHours: 8,
           keySkills: [...skills.slice(0, 2), `${interestAreas[0]} skills`]
         }))
@@ -1057,7 +1056,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
         relevanceScore: 85,
         modules: pathThemes[interestAreas[1]].modules.map((title, i) => ({
           title,
-          description: `Step ${i+1} in developing ${interestAreas[1]} expertise for your ${goal}`,
+          description: `Step ${i + 1} in developing ${interestAreas[1]} expertise for your ${goal}`,
           estimatedHours: 10,
           keySkills: [...skills.slice(0, 2), `${interestAreas[1]} skills`]
         }))
@@ -1065,7 +1064,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
       {
         pathName: `${interests[0] || "Core"} Specialization`,
         description: `Deepen your knowledge in ${interests[0] || "your area of interest"} to excel in ${goal}`,
-        difficulty: "intermediate", 
+        difficulty: "intermediate",
         estimatedTimeToComplete: "3 months",
         relevanceScore: 80,
         modules: generateDefaultModules(`${interests[0] || "Core"} Specialization`, 5)
@@ -1119,7 +1118,7 @@ const generateFallbackCareerPaths = (userData, quizAnalysis) => {
 // Simplified fallback for extreme cases
 const simpleFallbackCareerPaths = (userData) => {
   const goal = userData.careerGoal || "Career Development";
-  
+
   return [
     {
       pathName: `Getting Started with ${goal}`,
@@ -1168,7 +1167,7 @@ const simpleFallbackCareerPaths = (userData) => {
       estimatedTimeToComplete: "3 months",
       relevanceScore: 85,
       modules: Array(5).fill(null).map((_, i) => ({
-        title: `Module ${i+1}: Intermediate Topic ${i+1}`,
+        title: `Module ${i + 1}: Intermediate Topic ${i + 1}`,
         description: `Deepen your understanding of important concepts`,
         estimatedHours: 8 + i,
         keySkills: ["Advanced understanding", "Implementation skills"]
@@ -1181,7 +1180,7 @@ const simpleFallbackCareerPaths = (userData) => {
       estimatedTimeToComplete: "4 months",
       relevanceScore: 80,
       modules: Array(5).fill(null).map((_, i) => ({
-        title: `Module ${i+1}: Specialization Area ${i+1}`,
+        title: `Module ${i + 1}: Specialization Area ${i + 1}`,
         description: `Master specialized techniques and approaches`,
         estimatedHours: 10 + i,
         keySkills: ["Specialization", "Expert techniques"]
@@ -1194,7 +1193,7 @@ const simpleFallbackCareerPaths = (userData) => {
       estimatedTimeToComplete: "3 months",
       relevanceScore: 75,
       modules: Array(5).fill(null).map((_, i) => ({
-        title: `Module ${i+1}: Real-world Application ${i+1}`,
+        title: `Module ${i + 1}: Real-world Application ${i + 1}`,
         description: `Learn how to apply concepts in practical situations`,
         estimatedHours: 9 + i,
         keySkills: ["Practical application", "Real-world skills"]
@@ -1208,7 +1207,7 @@ const generateDefaultFallbackPaths = (userData) => {
   const goal = userData.careerGoal || "tech career";
   const interests = userData.interests || ["programming", "technology"];
   const skills = userData.skills || ["basic coding"];
-  
+
   return [
     {
       pathName: `${goal} Fundamentals`,
@@ -1279,7 +1278,7 @@ export const generateAINudges = async (userData, assessmentData = [], pathData =
       return JSON.parse(sanitizeJSON(response));
     } catch (groqError) {
       console.warn("GROQ failed for nudges, falling back to Gemini:", groqError);
-      
+
       // Fallback to Gemini
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent(prompt);
@@ -1312,7 +1311,7 @@ export const generateCareerSummary = async ({ user, careerPath, assessments }) =
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    
+
     const prompt =
       `You are Braineo – an AI career coach and motivational mentor for students on their learning journey.
     
